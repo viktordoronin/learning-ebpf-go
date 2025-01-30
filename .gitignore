@@ -1,6 +1,5 @@
-*.o
+
 .vscode/
-hello
 *.skel.h
 vmlinux.h
 chapter6/hello-verifier

@@ -11,6 +11,7 @@ Here's a short recap of how to build eBPF programs with Go. This is not an in-de
 2. Write your eBPF C code;
 3. Run `go generate` to have `bpf2go` build the helpers for your Go code;
 4. Write your Go code and run `go build`.
+
 Head [over here](https://ebpf-go.dev/guides/getting-started/) for detailed instructions
 
 # Thanks to:(TODO: add links)
@@ -28,3 +29,7 @@ email
 idk what else
 
 # btw hire me pls
+
+# Todo
+- Makefile
+- go run -exec sudo [./kprobe, ./uretprobe, ./ringbuffer, ...]
