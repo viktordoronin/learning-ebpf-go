@@ -10,6 +10,10 @@ import(
   "github.com/cilium/ebpf/perf"
 )
 
+// if we used ringbuf package it would be created automatically by Go generator, but with perf it doesn't
+// !!! IMPORTANT INFO BELOW !!!
+// 1. Can't use int or string or else it won't read. Use more explicit types like shown here. If you get parsing error saying something about fixed-size values, double-check this.
+// 2. Have to make the variables global(their names must start with capital letters) or else it won't read. If you get a panic saying "using value obtained using unexported field", double-check this.
 type bpfOutput struct{
 	Pid int32
 	Uid int32
@@ -28,19 +32,25 @@ func main() {
 		log.Fatal("Loading eBPF objects:", err)
 	}
 	defer objs.Close()
-	
+
+	//attach kprobe
 	kp, err := link.Kprobe("sys_execve", objs.Hello, nil)
 	if err != nil {
 		log.Fatalf("opening kprobe: %s", err)
 	}
 	defer kp.Close()
 
+	//make a reader for our output
 	perfrd,err:=perf.NewReader(objs.Output,4096)
 	if err!=nil {
 		log.Fatal(err)
 	}
 
+	//declare an output struct
 	var output bpfOutput
+
+	// Read the output record-by-record. perfrd.Read() grabs the raw blob, binary.Read() parses it and reads it into our bpfOutput struct.
+	// If you get gibberish output, it's likely something's going wrong at the binary read step. 
 	for{
 		record, err := perfrd.Read()
 		if err != nil {
