@@ -12,6 +12,13 @@ import (
 	"github.com/cilium/ebpf"
 )
 
+type hello_ring_buffer_configDataT struct {
+	Pid     int32
+	Uid     int32
+	Command [16]int8
+	Message [12]int8
+}
+
 type hello_ring_buffer_configUserMsgT struct{ Message [12]int8 }
 
 // loadHello_ring_buffer_config returns the embedded CollectionSpec for hello_ring_buffer_config.
