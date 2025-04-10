@@ -6,4 +6,4 @@ Considerations:
 2. Dump your `vmlinux.h` with `TODO`. The one that came with the original code didn't work for me, so the one I used might not necessarily work for you.
 
 C code only reads the perf map, so I didn't bother porting it to Go and copied the Chapter 2 code that does the same thing. 
-`find-map.go` uses `pin` package to read a pinned map. A complementary Bash script to create a map is included(don't forget sudo!), it's the same command that's used in the book 
+`find-map.go` reads a pinned map. A complementary Bash script to create a map is included(don't forget sudo!), it's the same command that's used in the book 

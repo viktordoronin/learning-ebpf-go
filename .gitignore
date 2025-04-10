@@ -3,6 +3,4 @@
 *.skel.h
 vmlinux.h
 chapter6/hello-verifier
-chapter5/find-map
-chapter5/hello-buffer-config
 *.sh
