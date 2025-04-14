@@ -1,8 +1,21 @@
+//go:build ignore
 #include "vmlinux.h"
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_tracing.h>
 #include <bpf/bpf_core_read.h>
-#include "hello.h"
+
+
+struct data_t {
+   int pid;
+   int uid;
+   char command[16];
+   char message[12];
+   char path[16];
+};
+
+struct msg_t {
+   char message[12];
+};
 
 const char kprobe_sys_msg[16] = "sys_execve";
 const char kprobe_msg[16] = "do_execve";
@@ -10,6 +23,7 @@ const char fentry_msg[16] = "fentry_execve";
 const char tp_msg[16] = "tp_execve";
 const char tp_btf_exec_msg[16] = "tp_btf_exec";
 const char raw_tp_exec_msg[16] = "raw_tp_exec";
+
 struct {
     __uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
     __uint(key_size, sizeof(u32));
@@ -64,26 +78,26 @@ int BPF_KPROBE(kprobe_do_execve, struct filename *filename) {
 
 // This should really look at the kernel version, because fentry is supported on
 // ARM from Linux 6.0 onwards
-#ifndef __TARGET_ARCH_arm64
-SEC("fentry/do_execve")
-int BPF_PROG(fentry_execve, struct filename *filename) {
-   struct data_t data = {}; 
+/* #ifndef __TARGET_ARCH_arm64 */
+/* SEC("fentry/do_execve") */
+/* int BPF_PROG(fentry_execve, struct filename *filename) { */
+/*    struct data_t data = {};  */
 
-   bpf_probe_read_kernel(&data.message, sizeof(data.message), fentry_msg); 
+/*    bpf_probe_read_kernel(&data.message, sizeof(data.message), fentry_msg);  */
 
-   data.pid = bpf_get_current_pid_tgid() >> 32;
-   data.uid = bpf_get_current_uid_gid() & 0xFFFFFFFF;
+/*    data.pid = bpf_get_current_pid_tgid() >> 32; */
+/*    data.uid = bpf_get_current_uid_gid() & 0xFFFFFFFF; */
 
-   bpf_get_current_comm(&data.command, sizeof(data.command));
-   const char *name = BPF_CORE_READ(filename, name);
-   bpf_probe_read_kernel(&data.path, sizeof(data.path), name);
+/*    bpf_get_current_comm(&data.command, sizeof(data.command)); */
+/*    const char *name = BPF_CORE_READ(filename, name); */
+/*    bpf_probe_read_kernel(&data.path, sizeof(data.path), name); */
 
-   bpf_printk("%s: filename->name: %s", fentry_msg, name);
+/*    bpf_printk("%s: filename->name: %s", fentry_msg, name); */
 
-   bpf_perf_event_output(ctx, &output, BPF_F_CURRENT_CPU, &data, sizeof(data));
-   return 0;   
-}
-#endif
+/*    bpf_perf_event_output(ctx, &output, BPF_F_CURRENT_CPU, &data, sizeof(data)); */
+/*    return 0;    */
+/* } */
+/* #endif */
 
 // name: sys_enter_execve
 // ID: 622
