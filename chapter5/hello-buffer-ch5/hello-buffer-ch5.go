@@ -1,4 +1,4 @@
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -target amd64 hello_buffer_ch5 hello-buffer-ch5.bpf.c
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -target amd64 -cflags -g hello_buffer_ch5 hello-buffer-ch5.bpf.c
 
 package main
 

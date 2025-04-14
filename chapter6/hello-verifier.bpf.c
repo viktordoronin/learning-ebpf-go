@@ -1,3 +1,4 @@
+//go:build ignore
 #include "vmlinux.h"
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_tracing.h>
@@ -6,6 +7,19 @@
 
 int c = 1;
 char message[12] = "Hello World";
+
+struct data_t {
+   int pid;
+   int uid;
+   int counter;
+   char command[16];
+   char message[12];
+};
+
+struct msg_t {
+   char message[12];
+};
+
 
 struct {
     __uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);

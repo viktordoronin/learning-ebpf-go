@@ -27,7 +27,7 @@ struct {
 struct {
   __uint(type, BPF_MAP_TYPE_RINGBUF);
   __uint(max_entries, 4096);
-  __type(value, struct data_t);
+  __type(value, __u32);
 } output SEC(".maps");
 
  

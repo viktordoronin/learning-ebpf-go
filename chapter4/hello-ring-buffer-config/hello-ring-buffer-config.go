@@ -1,4 +1,4 @@
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go -type data_t hello_ring_buffer_config  hello-ring-buffer-config.bpf.c
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go  hello_ring_buffer_config  hello-ring-buffer-config.bpf.c
 package main
 import (
 	"bytes"
