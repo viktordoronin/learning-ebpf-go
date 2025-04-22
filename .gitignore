@@ -4,3 +4,16 @@
 vmlinux.h
 chapter6/hello-verifier
 *.sh
+
+chapter2/hello-buffer/hello-buffer
+chapter2/hello-map/#hello-map.bpf.c#
+chapter2/hello-map/hello-map
+chapter2/hello-tail/hello-tail
+chapter5/hello-buffer/
+chapter6/chapter6
+chapter7/#hello.go#
+chapter7/chapter7
+chapter8/hello/
+chapter8/network/network
+chapter8/network/network.py
+chapter8/ping/ping

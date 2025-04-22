@@ -33,6 +33,33 @@ static __always_inline unsigned short is_icmp_ping_request(void *data,
   return (icmp->type == 8);
 }
 
+//Exercise 1 solution
+static __always_inline unsigned short is_icmp_ping_response(void *data,
+                                                           void *data_end) {
+  struct ethhdr *eth = data;
+  if (data + sizeof(struct ethhdr) > data_end)
+    return 0;
+
+  if (bpf_ntohs(eth->h_proto) != ETH_P_IP)
+    return 0;
+
+  struct iphdr *iph = data + sizeof(struct ethhdr);
+  if (data + sizeof(struct ethhdr) + sizeof(struct iphdr) > data_end)
+    return 0;
+
+  if (iph->protocol != 0x01)
+    // We're only interested in ICMP packets
+    return 0;
+
+  struct icmphdr *icmp = data + sizeof(struct ethhdr) + sizeof(struct iphdr);
+  if (data + sizeof(struct ethhdr) + sizeof(struct iphdr) +
+          sizeof(struct icmphdr) >
+      data_end)
+    return 0;
+
+  return (icmp->type == 0);
+}
+
 static __always_inline unsigned short ping_request_to_reply(void *data,
                                                             void *data_end) {
   struct ethhdr *eth = data;

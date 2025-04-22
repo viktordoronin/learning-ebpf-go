@@ -12,7 +12,13 @@ int myxdp(struct xdp_md *ctx) {
   void *data_end = (void *)(long)ctx->data_end;
 
   if (is_icmp_ping_request(data, data_end)) {
-    bpf_printk("Got ping packet");
+    bpf_printk("Ping!");
+    return XDP_DROP;
+  }
+
+  //Exercise 1 solution
+  if (is_icmp_ping_response(data, data_end)) {
+    bpf_printk("Pong!");
     return XDP_DROP;
   }
 

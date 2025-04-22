@@ -16,3 +16,6 @@ Here's a description of the program's flow:
 2. In the userspace, we populate our map with function descriptors for each syscall opcode(in our case). There are some explanations in the comments regarding what exactly is done and why.
 3. Just like in the original Python example, we first set all opcodes to be ignored and then specify the ones we want to be printed as timer, program execution or something else. However I quickly found out that printing out all the syscalls and all timer operations produce A LOT of output, so I created a new function called `print_syscall()` that allows us to print syscalls selectively. In the userspace, I set it to print syscall 61, so that when you execute `ls` and some other things in a shell you should see an output. The original code for printing stuff is still there, commented out(lines 22, 42). Don't forget to `go generate` to recompile the ELF. 
 [Thanks a lot for helping me figure it out!](https://stackoverflow.com/questions/70886166/bpf-tail-call-not-called)
+
+## Exercises
+Exercises 1, 2, 3 and 5 are done for this chapter inside their respective code. Exercise 1 is a fizz-buzz instead of even and odd as said in the book, I just felt like making things more interesting.

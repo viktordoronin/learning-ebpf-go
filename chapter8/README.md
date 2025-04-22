@@ -2,6 +2,8 @@
 
 The original readme is left verbatim to not make you go back and forth between here and the original repo. **IMPORTANT** - `network` is unfinished and is not supposed to work for now, I'll come back to it soon. `hello` doesn't have userspace code component, adapt the one from `ping` if you'd like, you'll only need to change a couple of things. 
 
+Exercise 1 solution is included in this chapter.
+
 # The original readme
 
 ## Simple XDP ping example
