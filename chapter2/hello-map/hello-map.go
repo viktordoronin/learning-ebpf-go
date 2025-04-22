@@ -27,6 +27,8 @@ func main() {
 	}
 	defer kp.Close()
 
+	//this is a way to continuously read every entry in a hash map
+	//as you can see, hash maps aren't too well geared for userspace reading
 	for{
 		time.Sleep(2*time.Second)
 		var s string

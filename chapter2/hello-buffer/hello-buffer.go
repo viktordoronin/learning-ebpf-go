@@ -10,10 +10,10 @@ import(
   "github.com/cilium/ebpf/perf"
 )
 
-// if we used ringbuf package it would be created automatically by Go generator, but with perf it doesn't
 // !!! IMPORTANT INFO BELOW !!!
-// 1. Can't use int or string or else it won't read. Use more explicit types like shown here. If you get parsing error saying something about fixed-size values, double-check this.
-// 2. Have to make the variables global(their names must start with capital letters) or else it won't read. If you get a panic saying "using value obtained using unexported field", double-check this.
+// We have to declare this struct by hand, see this chapter's readme for explanations. Some details:
+// 1. You can't use int or string, use more explicit types like shown here. If you get parsing error saying something about fixed-size values, double-check this.
+// 2. You have to make the variables global(their names must start with capital letters) or else it won't read. If you get a panic saying "using value obtained using unexported field", double-check this.
 type bpfOutput struct{
 	Pid int32
 	Uid int32
@@ -54,10 +54,10 @@ func main() {
 	for{
 		record, err := perfrd.Read()
 		if err != nil {
-			panic(err)
+			log.Fatal("reading raw data:",err)
 		}
 		if err := binary.Read(bytes.NewBuffer(record.RawSample), binary.LittleEndian, &output); err != nil {
-			log.Printf("parsing ringbuf event: %s", err)
+			log.Fatalf("parsing ringbuf event: %s", err)
 			continue
 		}
 		fmt.Printf("%d %d %s %s\n", output.Uid, output.Pid, output.Command, output.Message)
