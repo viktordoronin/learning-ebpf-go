@@ -1,6 +1,11 @@
+//go:build ignore
 #include <linux/icmp.h>
 #include <linux/if_ether.h>
 #include <linux/ip.h>
+#include <bpf/bpf_endian.h>
+#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_tracing.h>
+#include <bpf/bpf_core_read.h>
 
 static __always_inline unsigned short is_icmp_ping_request(void *data,
                                                            void *data_end) {
