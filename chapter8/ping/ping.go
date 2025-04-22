@@ -17,7 +17,7 @@ func main() {
 
 	var objs pingObjects
 	if err:=loadPingObjects(&objs,nil); err!=nil{
-			log.Fatal("Loading eBPF objects:", err)
+		log.Fatal("Loading eBPF objects:", err)
 	}
 	defer objs.Close()
 

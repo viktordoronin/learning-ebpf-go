@@ -53,7 +53,7 @@ func main() {
 	defer kp.Close()
 	
 	objs.MyConfig.Update(501,"hello Liz",ebpf.UpdateAny)
-		
+	
 	perfrd, err:=perf.NewReader(objs.Output,4096)
 	if err!=nil {
 		log.Fatal(err)

@@ -1,4 +1,4 @@
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go hello_buffer_config hello-buffer-config.bpf.c
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go hello_config hello-buffer-config.bpf.c
 
 package main
 
@@ -22,18 +22,18 @@ type bpfOutput struct{
 }
 
 func main() {
-    // Remove resource limits for kernels <5.11.
-    if err := rlimit.RemoveMemlock(); err != nil { 
-        log.Fatal("Removing memlock:", err)
-    }
-// Load the compiled eBPF ELF and load it into the kernel.
-	var objs hello_buffer_configObjects
-    if err := loadHello_buffer_configObjects(&objs, nil); err != nil {
-        log.Fatal("Loading eBPF objects:", err)
-    }
+	// Remove resource limits for kernels <5.11.
+	if err := rlimit.RemoveMemlock(); err != nil { 
+		log.Fatal("Removing memlock:", err)
+	}
+	// Load the compiled eBPF ELF and load it into the kernel.
+	var objs hello_configObjects
+	if err := loadHello_configObjects(&objs, nil); err != nil {
+		log.Fatal("Loading eBPF objects:", err)
+	}
 	defer objs.Close()
 
-		// Open a Kprobe at the entry point of the kernel function and attach the
+	// Open a Kprobe at the entry point of the kernel function and attach the
 	// pre-compiled program. 
 	kp, err := link.Kprobe("sys_execve", objs.Hello, nil)
 	if err != nil {
@@ -41,7 +41,7 @@ func main() {
 	}
 	defer kp.Close()
 
-	//the "two additional lines"
+	//the "two additional lines" from the book
 	objs.Config.Update(uint32(0),"Hey root!",ebpf.UpdateAny)
 	objs.Config.Update(uint32(1000),"Hi user 1000",ebpf.UpdateAny)
 	

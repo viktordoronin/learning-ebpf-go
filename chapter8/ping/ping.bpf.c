@@ -12,8 +12,8 @@ int myxdp(struct xdp_md *ctx) {
   void *data_end = (void *)(long)ctx->data_end;
 
   if (is_icmp_ping_request(data, data_end)) {
-        bpf_printk("Got ping packet");
-        return XDP_DROP;
+    bpf_printk("Got ping packet");
+    return XDP_DROP;
   }
 
   return XDP_PASS;

@@ -1,5 +1,9 @@
 # Chapter 8 - Networking examples
 
+The original readme is left verbatim to not make you go back and forth between here and the original repo. **IMPORTANT** - `network` is unfinished and is not supposed to work for now, I'll come back to it soon. `hello` doesn't have userspace code component, adapt the one from `ping` if you'd like, you'll only need to change a couple of things. 
+
+# The original readme
+
 ## Simple XDP ping example
 
 This isn't in the book, but I've used it a few times to show how easy it is to

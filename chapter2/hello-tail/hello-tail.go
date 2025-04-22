@@ -7,8 +7,8 @@ import(
 	"github.com/cilium/ebpf/rlimit"
 	"github.com/cilium/ebpf/link"
 	"github.com/cilium/ebpf"
-
-	"github.com/viktordoronin/learning-ebpf-go/helpers"
+	"os"
+	"io"
 )
 
 func main() {
@@ -44,5 +44,15 @@ func main() {
 	}
 	objs.Syscall.Update(uint32(61),uint32(objs.PrintSyscall.FD()),ebpf.UpdateAny)
 
-	helpers.Trace_print()
+	//print out the tracepipe
+	r,err:=os.Open("/sys/kernel/debug/tracing/trace_pipe")
+	if err!=nil{
+		log.Fatal(err)
+	}
+	for{
+		_,err=io.Copy(os.Stdout, r)
+		if err!=nil{
+			log.Fatal(err)
+		}
+	}
 }

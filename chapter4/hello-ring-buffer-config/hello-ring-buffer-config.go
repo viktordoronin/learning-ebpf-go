@@ -1,4 +1,4 @@
-//go:generate go run github.com/cilium/ebpf/cmd/bpf2go  hello_ring_buffer_config  hello-ring-buffer-config.bpf.c
+//go:generate go run github.com/cilium/ebpf/cmd/bpf2go  ring_config  hello-ring-buffer-config.bpf.c
 package main
 import (
 	"bytes"
@@ -25,8 +25,8 @@ func main() {
 		log.Fatal("Removing memlock:", err)
 	}
 	// Load the compiled eBPF ELF and load it into the kernel.
-	var objs hello_ring_buffer_configObjects
-	if err := loadHello_ring_buffer_configObjects(&objs, nil); err != nil {
+	var objs ring_configObjects
+	if err := loadRing_configObjects(&objs, nil); err != nil {
 		log.Fatal("Loading eBPF objects:", err)
 	}
 	defer objs.Close()
