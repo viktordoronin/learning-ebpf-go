@@ -27,6 +27,22 @@ func main() {
 	}
 	defer kp.Close()
 
+
+	//Exercise 2
+	kpo, err := link.Kprobe("sys_openat", objs.HelloO, nil)
+	if err != nil {
+		log.Fatalf("opening kprobe: %s", err)
+	}
+	defer kpo.Close()
+
+	//Exercise 3, commented out since it changes the behaviour significantly
+	//no changes in the BPF code are required(afaik)
+	// tp, err := link.AttachRawTracepoint(link.RawTracepointOptions{Name:"sys_enter",Program:objs.Hello})
+	// if err != nil {
+	// 	log.Fatalf("opening tracepoint: %s", err)
+	// }
+	// defer tp.Close()
+	
 	//this is a way to continuously read every entry in a hash map
 	//as you can see, hash maps aren't too well geared for userspace reading
 	for{

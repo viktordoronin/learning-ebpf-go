@@ -26,3 +26,23 @@ int hello(void* ctx){
   bpf_map_update_elem(&counter_table, &uid, &counter, BPF_ANY);
   return 0;
 }
+
+//Exercise 2
+//I didn't feel like changing it(not like you can change much anyway)
+SEC("kprobe")
+int hello_o(void* ctx){
+  __u64 uid;
+  __u64 counter = 0;
+  __u64 *p;
+
+  uid = bpf_get_current_uid_gid() & 0xFFFFFFFF;
+  //Exercise 4
+  //I actually have no idea how to do this lmao
+  p = bpf_map_lookup_elem(&counter_table, &uid);
+  if (p != 0) {
+    counter = *p;
+  }
+  counter++;
+  bpf_map_update_elem(&counter_table, &uid, &counter, BPF_ANY);
+  return 0;
+}

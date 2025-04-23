@@ -54,7 +54,8 @@ type hello_mapSpecs struct {
 //
 // It can be passed ebpf.CollectionSpec.Assign.
 type hello_mapProgramSpecs struct {
-	Hello *ebpf.ProgramSpec `ebpf:"hello"`
+	Hello  *ebpf.ProgramSpec `ebpf:"hello"`
+	HelloO *ebpf.ProgramSpec `ebpf:"hello_o"`
 }
 
 // hello_mapMapSpecs contains maps before they are loaded into the kernel.
@@ -109,12 +110,14 @@ type hello_mapVariables struct {
 //
 // It can be passed to loadHello_mapObjects or ebpf.CollectionSpec.LoadAndAssign.
 type hello_mapPrograms struct {
-	Hello *ebpf.Program `ebpf:"hello"`
+	Hello  *ebpf.Program `ebpf:"hello"`
+	HelloO *ebpf.Program `ebpf:"hello_o"`
 }
 
 func (p *hello_mapPrograms) Close() error {
 	return _Hello_mapClose(
 		p.Hello,
+		p.HelloO,
 	)
 }
 
