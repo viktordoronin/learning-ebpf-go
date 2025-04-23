@@ -1,7 +1,10 @@
 # learning-ebpf-go
 In this project, I teach myself BPF and Go by rewriting [O'Reily's "Learning eBPF" code examples](https://github.com/lizrice/learning-ebpf) into Go, complete with exercises where applicable. Each example is set up as its own package. ELFs are compiled for you; in order to build the executable, `go build` inside the folder. `go run` won't work since you need root or caps. Userspace examples are rewritten thanks to [ebpf-go documentation](https://pkg.go.dev/github.com/cilium/ebpf) and some stuff I googled(links in their respective chapters); 
+
 BCC code is ported for libbpf based on the book's explanations, considerations from [here](https://facebookmicrosites.github.io/bpf/blog/2020/02/20/bcc-to-libbpf-howto-guide.html) and a bit of information from [here](https://github.com/iovisor/bcc/issues/4404). 
+
 Chapters 3 and 10 are omitted since they contain no userspace code. 
+
 Exercises are done for chapters 2 and 8 since those are the only ones that require actual coding. 
 
 ## eBPF and Go
