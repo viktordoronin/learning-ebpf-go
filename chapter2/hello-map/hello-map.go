@@ -36,7 +36,7 @@ func main() {
 	defer kpo.Close()
 
 	//Exercise 3, commented out since it changes the behaviour significantly
-	//no changes in the BPF code are required(afaik)
+	//don't forget to change BPF section to raw_tp
 	// tp, err := link.AttachRawTracepoint(link.RawTracepointOptions{Name:"sys_enter",Program:objs.Hello})
 	// if err != nil {
 	// 	log.Fatalf("opening tracepoint: %s", err)

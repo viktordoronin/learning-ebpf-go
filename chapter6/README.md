@@ -7,4 +7,6 @@ probe_exec() verifier log: processed 93 insns (limit 1000000) max_states_per_ins
 XDP_hello() verifier log: processed 7 insns (limit 1000000) max_states_per_insn 0 total_states 0 peak_states 0 mark_read 0
 ```
 change it to `LogLevel:2` to print a full verifier log. In case of verifier rejection, the error is printed starting from line 38.
-4. Since one of our programs is XDP, don't forget to turn LRO off if you're executing this under WSL.
+4. Since one of our programs is XDP, don't forget to turn LRO off if you're executing this under WSL: `ethtool -K eth0 lro off` 
+
+Thanks to [Dylan Reimerink](https://stackoverflow.com/a/76779205) for the code snippet! 
